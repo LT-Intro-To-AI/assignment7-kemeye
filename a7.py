@@ -29,4 +29,28 @@ xorn = NeuralNet(2,20,1)
 xorn.train(x_or_trainingdata)
 
 print()
+
 print(xorn.test_with_expected(x_or_trainingdata))
+
+print("\n\nTraining voter opinion\n\n")
+
+voter_opinion_data = [
+    ([.9, .6, .8, .3, .1], [1]),
+    ([.8, .8, .4, .6, .4], [1]),
+    ([.7, .2, .4, .6, .3], [1]),
+    ([.5, .5, .8, .4, .8], [0]),
+    ([.3, .1, .6, .8, .8], [0]),
+    ([.6, .3, .4, .3, .6], [0]),
+]
+
+von = NeuralNet(5, 6, 1)
+von.train(voter_opinion_data)
+
+print(von.test_with_expected(voter_opinion_data))
+
+test_data = [
+    [1, 1, 1, .1, .1],
+    [.5, .2, .1, .7, .7]
+]
+
+print(f"test case 1: {test_data[0]} evaluates to {von.evaluate(test_data[0])}" )
