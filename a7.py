@@ -50,7 +50,10 @@ print(von.test_with_expected(voter_opinion_data))
 
 test_data = [
     [1, 1, 1, .1, .1],
-    [.5, .2, .1, .7, .7]
+    [.5, .2, .1, .7, .7],
+    [.8, .3, .3, .3, .8],
+    [.8, .3, .3, .8, .3],
+    [.9, .8, .8, .3, .6]
 ]
-
-print(f"test case 1: {test_data[0]} evaluates to {von.evaluate(test_data[0])}" )
+for voter_data in test_data:
+    print(f"test case: {voter_data} evaluates to {von.evaluate(voter_data)}")
