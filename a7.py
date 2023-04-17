@@ -18,13 +18,13 @@ from neural import NeuralNet
 # print(sqn.evaluate([0.95]))
 
 x_or_trainingdata = [
-    ([0,0], [0]),
-    ([1,0],[1]),
+    ([0,0],[0]),
     ([0,1],[1]),
+    ([1,0],[1]),
     ([1,1],[0]),
 ]
 
-xorn = NeuralNet(2,20,1)
+xorn = NeuralNet(2,8,1)
 
 xorn.train(x_or_trainingdata)
 
