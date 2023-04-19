@@ -57,3 +57,5 @@ test_data = [
 ]
 for voter_data in test_data:
     print(f"test case: {voter_data} evaluates to {von.evaluate(voter_data)}")
+
+    
