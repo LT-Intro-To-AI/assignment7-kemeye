@@ -11,22 +11,36 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     Returns:
         tuple of input list and output list
     """
-    wordRef = {"v-high","high","med","low","more","small","med","big","low","high"}
-    numRef =  {3,2,1,0,6,0,1,2,0,2}
+    # wordRef = {"v-high","high","med","low","more","small","med","big","low","high"}
+    # numRef =  {3,2,1,0,6,0,1,2,0,2}
     numWordRef = {
-        "v-high": 3,
+        "vhigh": 3,
+        "high": 2,
+        "med": 1,
+        "low": 0,
+        "more": 6,
+        "small": 0,
+        "big": 2,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        "5more": 6
     }
     tokens = line.split(",")
+    del tokens[len(tokens)-1]
     print(tokens)
-    out = tokens[0]
-    print(out)
+    # out = tokens[0]
+    # print(out)
     # output = [0 if out == 1 else 0.5 if out == 2 else 1]
+    con_int = []
     for x in tokens:
         if type(x) == str:
-            output = 
+            con_int.append(numWordRef[x])
+    output = con_int[0]
     print(output)
 
-    inpt = [float(x) for x in tokens[1:]]
+    inpt = [float(x) for x in con_int[1:]]
     print(inpt)
     return (inpt, output)
 
