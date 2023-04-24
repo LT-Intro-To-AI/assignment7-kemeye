@@ -38,11 +38,12 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
         if type(x) == str:
             con_int.append(numWordRef[x])
     output = con_int[0]
-    print(output)
+    # print(output)
+    out = tuple(output)
 
     inpt = [float(x) for x in con_int[1:]]
-    print(inpt)
-    return (inpt, output)
+    # print(inpt)
+    return (inpt, out)
 
 
 def normalize(data: List[Tuple[List[float], List[float]]]):
@@ -79,8 +80,8 @@ td = normalize(training_data)
 # for line in td:
 #     print(line)
 
-# nn = NeuralNet(13, 3, 1)
-# nn.train(td, iters=1000, print_interval=1000, learning_rate=0.1)
+nn = NeuralNet(5, 3, 1)
+nn.train(td, iters=1000, print_interval=1000, learning_rate=0.1)
 
 # for i in nn.test_with_expected(td):
 #     print(f"desired: {i[1]}, actual: {i[2]}")
