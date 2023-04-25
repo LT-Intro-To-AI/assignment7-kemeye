@@ -30,20 +30,18 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     tokens = line.split(",")
     del tokens[len(tokens)-1]
     print(tokens)
-    # out = tokens[0]
-    # print(out)
     # output = [0 if out == 1 else 0.5 if out == 2 else 1]
     con_int = []
     for x in tokens:
         if type(x) == str:
             con_int.append(numWordRef[x])
-    output = con_int[0]
+    out = con_int[0]
     # print(output)
-    out = tuple(output)
+    output = [0 if out == 0 else 0.33 if out == 1 else 0.66 if out == 2 else 1]
 
     inpt = [float(x) for x in con_int[1:]]
     # print(inpt)
-    return (inpt, out)
+    return (inpt, output)
 
 
 def normalize(data: List[Tuple[List[float], List[float]]]):
@@ -77,11 +75,11 @@ with open("car.txt", "r") as f:
 
 td = normalize(training_data)
 
-# for line in td:
-#     print(line)
+for line in td:
+    print(line)
 
 nn = NeuralNet(5, 3, 1)
 nn.train(td, iters=1000, print_interval=1000, learning_rate=0.1)
 
-# for i in nn.test_with_expected(td):
-#     print(f"desired: {i[1]}, actual: {i[2]}")
+for i in nn.test_with_expected(td):
+    print(f"desired: {i[1]}, actual: {i[2]}")
