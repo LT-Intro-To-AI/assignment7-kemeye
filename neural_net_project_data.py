@@ -71,7 +71,7 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
 
 
 with open("car.txt", "r") as f:
-    training_data = [parse_line(line) for line in f.readlines() if len(line) > 4]
+    training_data = [parse_line(line) for line in f.readlines()[::10] if len(line) > 4]
 
 td = normalize(training_data)
 
@@ -79,7 +79,7 @@ for line in td:
     print(line)
 
 nn = NeuralNet(5, 3, 1)
-nn.train(td, iters=1000, print_interval=1000, learning_rate=0.1)
+nn.train(td, iters=1000, print_interval=1000, learning_rate=0.5)
 
 for i in nn.test_with_expected(td):
     print(f"desired: {i[1]}, actual: {i[2]}")
