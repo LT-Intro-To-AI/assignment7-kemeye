@@ -37,7 +37,13 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
             con_int.append(numWordRef[x])
     out = con_int[0]
     # print(output)
-    output = [0 if out == 0 else 0.33 if out == 1 else 0.66 if out == 2 else 1]
+    output = [
+        0,0 if out == 0 
+        else 0,1 if out == 1 
+        else 1,0 if out == 2 
+        else 1,1]
+    if out == 0:
+        output = [0,0]
 
     inpt = [float(x) for x in con_int[1:]]
     # print(inpt)
@@ -79,7 +85,7 @@ for line in td:
     print(line)
 
 nn = NeuralNet(5, 3, 1)
-nn.train(td, iters=1000, print_interval=1000, learning_rate=0.5)
+nn.train(td, iters=1000, print_interval=100, learning_rate=0.1)
 
 for i in nn.test_with_expected(td):
     print(f"desired: {i[1]}, actual: {i[2]}")
