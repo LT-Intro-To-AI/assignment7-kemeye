@@ -54,7 +54,7 @@ with open("wine_data.txt", "r") as f:
 
 td = normalize(training_data)
 
-# for line in td:
+# for line in td:z
 #     print(line)
 
 nn = NeuralNet(13, 3, 1)
