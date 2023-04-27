@@ -25,11 +25,11 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
         '3': 3,
         '4': 4,
         '5': 5,
-        "5more": 6
+        "5more": 5
     }
     tokens = line.split(",")
     del tokens[len(tokens)-1]
-    print(tokens)
+    # print(tokens)
     # output = [0 if out == 1 else 0.5 if out == 2 else 1]
     con_int = []
     for x in tokens:
@@ -37,13 +37,35 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
             con_int.append(numWordRef[x])
     out = con_int[0]
     # print(output)
-    output = [
-        0,0 if out == 0 
-        else 0,1 if out == 1 
-        else 1,0 if out == 2 
-        else 1,1]
+    # output = [
+    #     0 if out == 0 
+    #     else 0.33 if out == 1 
+    #     else 0.66 if out == 2 
+    #     else 1]
+    # output = [
+    #     0,0 if out == 0 
+    #     else 0,1 if out == 1 
+    #     else 1,0 if out == 2 
+    #     else 1,1]
+    # output = [0,0]
+    # if out == 0:
+    #     output = [0,0]
+    # elif out == 1:
+    #     output = [0,1]
+    # elif out == 2:
+    #     output = [1,0]
+    # elif out == 3:
+    #     out == [1,1]
+    
+    output = 0,0
     if out == 0:
-        output = [0,0]
+        output = 0,0
+    elif out == 1:
+        output = 0,1
+    elif out == 2:
+        output = 1,0
+    elif out == 3:
+        out == 1,1
 
     inpt = [float(x) for x in con_int[1:]]
     # print(inpt)
@@ -77,15 +99,16 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
 
 
 with open("car.txt", "r") as f:
-    training_data = [parse_line(line) for line in f.readlines()[::10] if len(line) > 4]
+    training_data = [parse_line(line) for line in f.readlines() if len(line) > 4]
 
 td = normalize(training_data)
 
-for line in td:
-    print(line)
 
-nn = NeuralNet(5, 3, 1)
+# for line in td:
+#     print(line)
+
+
 nn.train(td, iters=1000, print_interval=100, learning_rate=0.1)
-
+# IM GONNA LOSE IT!!!!!!!!
 for i in nn.test_with_expected(td):
     print(f"desired: {i[1]}, actual: {i[2]}")
