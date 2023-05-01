@@ -11,8 +11,6 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     Returns:
         tuple of input list and output list
     """
-    # wordRef = {"v-high","high","med","low","more","small","med","big","low","high"}
-    # numRef =  {3,2,1,0,6,0,1,2,0,2}
     numWordRef = {
         "vhigh": 3,
         "high": 2,
@@ -30,47 +28,25 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
     tokens = line.split(",")
     del tokens[len(tokens)-1]
     # print(tokens)
-    # output = [0 if out == 1 else 0.5 if out == 2 else 1]
     con_int = []
     for x in tokens:
-        if type(x) == str:
-            con_int.append(numWordRef[x])
-    out = con_int[0]
-    # print(output)
-    output = [
-        0 if out == 0 
-        else 0.33 if out == 1 
-        else 0.66 if out == 2 
-        else 1]
-    
-    # output = [
-    #     0,0 if out == 0 
-    #     else 0,1 if out == 1 
-    #     else 1,0 if out == 2 
-    #     else 1,1]
-
-    # output = [0,0]
-    # if out == 0:
-    #     output = [0,0]
-    # elif out == 1:
-    #     output = [0,1]
-    # elif out == 2:
-    #     output = [1,0]
-    # elif out == 3:
-    #     out == [1,1]
-    
-    # output = 0,0
-    # if out == 0:
-    #     output = 0,0
-    # elif out == 1:
-    #     output = 0,1
-    # elif out == 2:
-    #     output = 1,0
-    # elif out == 3:
-    #     out == 1,1
+        con_int.append(int(numWordRef[x]))
+    out = int(con_int[0])
+    # print(out)
+    output = [0]
+    if out == 0:
+        output = [0]
+    elif out == 1:
+        output = [0.33]
+    elif out == 2:
+        output = [0.66]
+    elif out == 3:
+        output = [1]
+    # print(f"output: {output}")
 
     inpt = [float(x) for x in con_int[1:]]
-    # print(inpt)
+    # print(f"input: {inpt}")
+    # print(f"output tuple {(inpt, output)}")
     return (inpt, output)
 
 
@@ -101,17 +77,20 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
 
 
 with open("car.txt", "r") as f:
-    training_data = [parse_line(line) for line in f.readlines() if len(line) > 4]
+    training_data = [parse_line(line) for line in f.readlines()[:] if len(line) > 4]
 
+# f = open("car.txt", "r")
+# fList = f.readlines()
+# for x in range(len(training_data)):
+#     print(training_data[x])
+#     print(fList[x])
 td = normalize(training_data)
 
+# for line in td:
+#     print(line)
 
-for line in td:
-    print(line)
+nn = NeuralNet(5, 10, 1)
+nn.train(td, iters=100, print_interval=10, learning_rate=0.99)
 
-nn = NeuralNet(5, 3, 1)
-
-nn.train(td, iters=1000, print_interval=100, learning_rate=0.1)
-# IM GONNA LOSE IT!!!!!!!!
 for i in nn.test_with_expected(td):
     print(f"desired: {i[1]}, actual: {i[2]}")
