@@ -33,15 +33,26 @@ def parse_line(line: str) -> Tuple[List[float], List[float]]:
         con_int.append(int(numWordRef[x]))
     out = int(con_int[0])
     # print(out)
-    output = [0]
+    output = [0.0]
     if out == 0:
-        output = [0]
+        output = [0.0]
     elif out == 1:
         output = [0.33]
     elif out == 2:
         output = [0.66]
     elif out == 3:
-        output = [1]
+        output = [1.0]
+
+    # output = [0.0, 0.0]
+    # if out == 0:
+    #     output = [0.0, 0.0]
+    # elif out == 1:
+    #     output = [0.0, 1.0]
+    # elif out == 2:
+    #     output = [1.0, 0.0]
+    # elif out == 3:
+    #     output = [1.0, 1.0]
+
     # print(f"output: {output}")
 
     inpt = [float(x) for x in con_int[1:]]
@@ -77,7 +88,7 @@ def normalize(data: List[Tuple[List[float], List[float]]]):
 
 
 with open("car.txt", "r") as f:
-    training_data = [parse_line(line) for line in f.readlines()[:] if len(line) > 4]
+    training_data = [parse_line(line) for line in f.readlines()[::10] if len(line) > 4]
 
 # f = open("car.txt", "r")
 # fList = f.readlines()
@@ -90,7 +101,7 @@ td = normalize(training_data)
 #     print(line)
 
 nn = NeuralNet(5, 10, 1)
-nn.train(td, iters=100, print_interval=10, learning_rate=0.99)
+nn.train(td, iters=200, print_interval=10, learning_rate=0.9)
 
 for i in nn.test_with_expected(td):
-    print(f"desired: {i[1]}, actual: {i[2]}")
+    print(f"predicted: {i[2]}, actual: {i[1]}")
